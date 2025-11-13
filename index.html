@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Guia de alimentação saudável com sugestões de refeições por objetivo: emagrecimento, ganho de massa e manutenção." />
+  <title>🌱 Guia de Alimentação Saudável</title>
+  <style>
+    /* Reset e fonte */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html,body { height: 100%; }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #f1f8e9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #1f2937;
+    }
+
+    /* Container principal */
+    .container {
+      width: 100%;
+      max-width: 560px;
+      background: #ffffffcc;
+      border-radius: 18px;
+      padding: 26px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      animation: fadeIn 400ms ease;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(14px);} to { opacity: 1; transform: translateY(0);} }
+
+    header h1 {
+      color: #2e7d32;
+      text-align: center;
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+    }
+    header p.lead {
+      text-align: center;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .btn-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+      min-width: 140px;
+      text-align: left;
+    }
+    button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
+    button:focus { outline: 3px solid #90caf9; outline-offset: 2px; }
+
+    .objetivo-btn { background: #81c784; color: white; flex: 1 1 30%; }
+    .refeicao-btn { background: #4fc3f7; color: white; flex: 1 1 40%; }
+
+    .resultado {
+      background: #fff8e1;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: left;
+      color: #bf360c;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      font-weight: 600;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.88rem;
+      color: #374151;
+      margin-top: 6px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .secondary {
+      background: #e5e7eb;
+      color: #111827;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-weight: 600;
+      box-shadow: none;
+    }
+
+    @media (max-width: 420px) {
+      button { min-width: 100%; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="application" aria-labelledby="app-title">
+    <header>
+      <h1 id="app-title">🌱 Guia de Alimentação Saudável</h1>
+      <p class="lead">Escolha seu objetivo e refeição para receber uma sugestão saudável.</p>
+    </header>
+
+    <main>
+      <section class="section" aria-labelledby="objetivo-title">
+        <h2 id="objetivo-title">Escolha seu objetivo:</h2>
+        <div class="btn-grid" role="list" aria-label="Objetivos">
+          <button type="button" class="objetivo-btn" data-objetivo="Emagrecimento" aria-pressed="false" role="listitem">💪 Emagrecimento</button>
+          <button type="button" class="objetivo-btn" data-objetivo="Ganho de Massa" aria-pressed="false" role="listitem">🍗 Ganho de Massa</button>
+          <button type="button" class="objetivo-btn" data-objetivo="Manutenção" aria-pressed="false" role="listitem">⚖️ Manter peso</button>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="refeicao-title">
+        <h2 id="refeicao-title">Escolha a refeição:</h2>
+        <div class="btn-grid" role="list" aria-label="Refeições">
+          <button type="button" class="refeicao-btn" data-refeicao="Café da manhã" aria-pressed="false" role="listitem">☀️ Café da manhã</button>
+          <button type="button" class="refeicao-btn" data-refeicao="Almoço" aria-pressed="false" role="listitem">🍽️ Almoço</button>
+          <button type="button" class="refeicao-btn" data-refeicao="Lanche da tarde" aria-pressed="false" role="listitem">🍎 Lanche da tarde</button>
+          <button type="button" class="refeicao-btn" data-refeicao="Jantar" aria-pressed="false" role="listitem">🌙 Jantar</button>
+          <button type="button" class="refeicao-btn" data-refeicao="Sobremesa" aria-pressed="false" role="listitem">🍓 Sobremesa</button>
+        </div>
+      </section>
+
+      <div class="resultado" id="resultado" aria-live="polite">
+        Escolha seu objetivo e refeição para ver a sugestão saudável!
+      </div>
+
+      <div class="controls" role="group" aria-label="Controles">
+        <button id="limpar" class="secondary" type="button">Limpar seleção</button>
+        <button id="copiar" class="secondary" type="button">Copiar sugestão</button>
+      </div>
+    </main>
+
+    <footer class="footer" aria-hidden="false">
+      🌿 Cuide do seu corpo, ele é seu bem mais precioso! Beba água e evite ultraprocessados.
+    </footer>
+  </div>
+
+  <noscript>
+    <div style="max-width:560px;margin:16px auto;padding:12px;background:#fff3e0;border-radius:8px;color:#5d4037;">
+      Este app funciona melhor com JavaScript ativado. Ative-o para interagir com as sugestões.
+    </div>
+  </noscript>
+
+  <script>
+    (function () {
+      'use strict';
+
+      // Persistência das escolhas
+      const storageKey = 'guia-alimentacao:selecoes';
+
+      const alimentos = {
+        "Emagrecimento": {
+          "Café da manhã": "🥣 Iogurte natural com aveia e frutas vermelhas.",
+          "Almoço": "🥗 Frango grelhado, arroz integral e salada verde com azeite.",
+          "Lanche da tarde": "🍌 Banana com pasta de amendoim e chia.",
+          "Jantar": "🥦 Sopa de legumes ou omelete com vegetais.",
+          "Sobremesa": "🍓 Gelatina natural com pedaços de frutas."
+        },
+        "Ganho de Massa": {
+          "Café da manhã": "🍳 Ovos mexidos, aveia, banana e pasta de amendoim.",
+          "Almoço": "🍛 Arroz, feijão, carne magra e batata-doce.",
+          "Lanche da tarde": "🥤 Shake de whey protein com aveia e frutas.",
+          "Jantar": "🍠 Peixe ou frango com arroz integral e legumes cozidos.",
+          "Sobremesa": "🍫 Iogurte com granola e mel natural."
+        },
+        "Manutenção": {
+          "Café da manhã": "🥣 Tapioca com ovo e suco natural.",
+          "Almoço": "🥗 Frango grelhado, arroz integral e legumes variados.",
+          "Lanche da tarde": "🍎 Mix de castanhas e frutas.",
+          "Jantar": "🍲 Sopa de legumes com frango desfiado.",
+          "Sobremesa": "🍌 Banana amassada com canela."
+        }
+      };
+
+      let objetivo = '';
+      let refeicao = '';
+
+      const resultadoEl = document.getElementById('resultado');
+      const objetivoBtns = Array.from(document.querySelectorAll('.objetivo-btn'));
+      const refeicaoBtns = Array.from(document.querySelectorAll('.refeicao-btn'));
+      const limparBtn = document.getElementById('limpar');
+      const copiarBtn = document.getElementById('copiar');
+
+      // Restaura seleção do localStorage
+      function restore() {
+        try {
+          const raw = localStorage.getItem(storageKey);
+          if (!raw) return;
+          const parsed = JSON.parse(raw);
+          if (parsed.objetivo) setObjetivo(parsed.objetivo, {announce:false});
+          if (parsed.refeicao) setRefeicao(parsed.refeicao, {announce:false});
+        } catch (e) {
+          // ignore
+        }
+      }
+
+      function save() {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify({objetivo, refeicao}));
+        } catch (e) { /* ignore */ }
+      }
+
+      function clearSelection() {
+        objetivo = '';
+        refeicao = '';
+        objetivoBtns.forEach(b => { b.setAttribute('aria-pressed','false'); b.classList.remove('selected'); });
+        refeicaoBtns.forEach(b => { b.setAttribute('aria-pressed','false'); b.classList.remove('selected'); });
+        resultadoEl.textContent = 'Escolha seu objetivo e refeição para ver a sugestão saudável!';
+        save();
+      }
+
+      function announce(text) {
+        // aria-live already handles announcing when innerText changes
+        resultadoEl.textContent = text;
+      }
+
+      function setObjetivo(obj, opts = {announce:true}) {
+        objetivo = obj;
+        objetivoBtns.forEach(b => {
+          const is = b.dataset.objetivo === obj;
+          b.setAttribute('aria-pressed', String(is));
+          b.classList.toggle('selected', is);
+        });
+        if (opts.announce) announce(`Objetivo selecionado: ${obj}. Agora escolha a refeição.`);
+        save();
+      }
+
+      function setRefeicao(ref, opts = {announce:true}) {
+        if (!objetivo) {
+          // foco para o primeiro objetivo e mensagem curta
+          objetivoBtns[0].focus();
+          announce('Primeiro selecione seu objetivo.');
+          return;
+        }
+        refeicao = ref;
+        refeicaoBtns.forEach(b => {
+          const is = b.dataset.refeicao === ref;
+          b.setAttribute('aria-pressed', String(is));
+          b.classList.toggle('selected', is);
+        });
+        const sugestao = alimentos[objetivo] && alimentos[objetivo][refeicao] ? alimentos[objetivo][refeicao] : 'Sugestão indisponível.';
+        const mensagem = `Objetivo: ${objetivo}. Refeição: ${refeicao}. Sugestão: ${sugestao} — Dica: Beba bastante água e evite ultraprocessados.`;
+        announce(mensagem);
+        save();
+      }
+
+      // Event wiring: click + keyboard support (Enter / Space)
+      function wireButtons(list, handler, dataAttr) {
+        list.forEach(btn => {
+          btn.addEventListener('click', () => handler(btn.dataset[dataAttr]));
+          btn.addEventListener('keydown', (ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              handler(btn.dataset[dataAttr]);
+            }
+          });
+        });
+      }
+
+      wireButtons(objetivoBtns, setObjetivo, 'objetivo');
+      wireButtons(refeicaoBtns, setRefeicao, 'refeicao');
+
+      limparBtn.addEventListener('click', clearSelection);
+      limparBtn.addEventListener('keydown', (e) => { if (e.key==='Enter' || e.key===' ') e.preventDefault(); });
+
+      copiarBtn.addEventListener('click', async () => {
+        // copia o texto atual do bloco de resultado
+        const text = resultadoEl.innerText || resultadoEl.textContent;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            await navigator.clipboard.writeText(text);
+            const prev = resultadoEl.textContent;
+            resultadoEl.textContent = 'Sugestão copiada para a área de transferência!';
+            setTimeout(() => { resultadoEl.textContent = prev; }, 1500);
+          } else {
+            // fallback
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            resultadoEl.textContent = 'Sugestão copiada para a área de transferência!';
+            setTimeout(() => restore(), 1200);
+          }
+        } catch (err) {
+          resultadoEl.textContent = 'Não foi possível copiar. Selecione e copie manualmente.';
+        }
+      });
+
+      // inicializa restaurando se possível
+      restore();
+
+    })();
+  </script>
+</body>
+</html>
